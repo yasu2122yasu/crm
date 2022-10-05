@@ -1,8 +1,19 @@
 <?php
 
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\InertiaTestController;
+
+Route::get('/inertia/index', [InertiaTestController::class, 'index'])->name('inertia.index');
+
+Route::get(
+    '/inertia-test',
+    function () {
+        return Inertia::render('InertiaTest');
+    }
+);
 
 //第1引数はコンポーネントの名前
 Route::get('/', function () {
@@ -19,10 +30,3 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
-
-Route::get(
-    '/inertia-test',
-    function () {
-        return Inertia::render('InertiaTest');
-    }
-);
