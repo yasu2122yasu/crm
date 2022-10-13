@@ -11,7 +11,6 @@
       price: null
   })
 
-  //第二引数にformを書くことで、const formを指定したことになる。
   const storeItem = () => {
     Inertia.post('/items', form)
   }
