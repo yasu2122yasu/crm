@@ -3,5 +3,5 @@
 </script>
 
 <template>
-purchase/create
+purchase
 </template>
