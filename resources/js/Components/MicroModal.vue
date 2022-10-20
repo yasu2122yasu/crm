@@ -1,7 +1,27 @@
 <script setup>
-import { ref } from 'vue'
+import axios from 'axios';
+import { ref,reactive } from 'vue'
+
+const search =ref('')
+const customers = reactive({})
+
+
 const isShow = ref(false)
 const toggleStatus = () => { isShow.value = !isShow.value }
+
+const searchCustomers = async () => {
+  await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie', { withCredentials: true })
+  try{
+    await axios.get(`/api/searchCustomers/?search=${search.value}`)
+    .then( res => {
+        console.log(res.data)
+        customers.value = res.data
+    })
+    toggleStatus()
+    } catch (e) {
+    console.log(e)
+  }
+}
 </script>
 
 <template>
@@ -24,7 +44,8 @@ const toggleStatus = () => { isShow.value = !isShow.value }
         <button @click="toggleStatus" type="button" class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
       </footer>
     </div>
+   </div>
   </div>
-</div>
-<button @click="toggleStatus" type="button" data-micromodal-trigger="modal-1" href='javascript:;'>Open Modal Dialog</button>
+  <!-- <input name="customer" v-model="search">
+  <button @click="searchCustomers" type="button" data-micromodal-trigger="modal-1">検索する</button> -->
 </template>
