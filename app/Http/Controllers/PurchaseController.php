@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use App\Models\Order;
 
 class PurchaseController extends Controller
 {
@@ -19,6 +20,14 @@ class PurchaseController extends Controller
      */
     public function index()
     {
+        $orders = Order::groupBy('id')
+            ->selectRaw('id, sum(subtotal) as total,
+        customer_name, status, created_at')
+            ->paginate(50);
+
+        return Inertia::render('Purchases/Index', [
+            'orders' => $orders
+        ]);
     }
 
     /**
@@ -28,13 +37,13 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        $customers = Customer::select('id', 'name', 'kana')->get();
+        // $customers = Customer::select('id', 'name', 'kana')->get();
         $items = Item::select('id', 'name', 'price')
             ->where('is_selling', true)
             ->get();
 
         return Inertia::render('Purchases/Create', [
-            'customers' => $customers,
+            // 'customers' => $customers,
             'items' => $items
         ]);
     }
@@ -78,7 +87,18 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-        //
+        $items = Order::where('id', $purchase->id)->get();
+
+        $order = Order::groupBy('id')
+            ->where('id', $purchase->id)
+            ->selectRaw('id, sum(subtotal) as total,
+        customer_name, status, created_at')
+            ->get();
+
+        return Inertia::render('Purchases/Show', [
+            'items' => $items,
+            'order' => $order
+        ]);
     }
 
     /**

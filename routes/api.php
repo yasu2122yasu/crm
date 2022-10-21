@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Customer;
 
-
 Route::middleware('auth:sanctum')
     ->get('/searchCustomers', function (Request $request) {
         return Customer::searchCustomers($request->search)
