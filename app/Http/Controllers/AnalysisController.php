@@ -7,8 +7,8 @@ use Inertia\Inertia;
 
 class AnalysisController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Analysis');
-    }
+  public function index()
+  {
+    return Inertia::render('Analysis');
+  }
 }

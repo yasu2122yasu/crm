@@ -104,7 +104,7 @@ const showingNavigationDropdown = ref(false);
                             顧客管理
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('analysis')" :active="route().current('analysis')">
-                            顧客管理
+                            データ分析
                         </ResponsiveNavLink>
                     </div>
 
