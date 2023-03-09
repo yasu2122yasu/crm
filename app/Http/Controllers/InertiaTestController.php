@@ -65,3 +65,5 @@ class InertiaTestController extends Controller
             ]);
     }
 }
+
+//テスト
